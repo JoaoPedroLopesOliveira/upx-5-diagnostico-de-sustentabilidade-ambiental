@@ -3,11 +3,19 @@ from sqlalchemy.orm import Session
 from typing import List
 from .database import SessionLocal, engine, Base
 from . import models, schemas
+from fastapi.middleware.cors import CORSMiddleware
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Diagnóstico de Sustentabilidade")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db: Session = SessionLocal()
@@ -43,12 +51,12 @@ def get_company_diagnosis(company_id: int, db: Session = Depends(get_db)):
     if not metrics:
         raise HTTPException(status_code=404, detail="Nenhuma métrica encontrada para esta empresa")
     
-    #calcula medias históricas
+    
     avg_energy = sum(m.energy_kwh for m in metrics) / len(metrics)
     avg_water = sum(m.water_m3 for m in metrics) / len(metrics)
     avg_waste = sum(m.waste_kg for m in metrics) / len(metrics)
     
-    #normaliza os valores para um diagnóstico simples
+
     energy_score = max(0, 100 - (avg_energy / 10))
     water_score = max(0, 100 - (avg_water / 5))
     waste_score = max(0, 100 - (avg_waste / 2))
