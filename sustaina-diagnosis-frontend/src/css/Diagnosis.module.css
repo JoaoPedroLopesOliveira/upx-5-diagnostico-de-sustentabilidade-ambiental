@@ -1,0 +1,167 @@
+
+
+.diagnosisContainer {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #333;
+}
+
+.loading {
+  padding: 30px;
+  font-size: 1.2rem;
+  text-align: center;
+  color: #555;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.companyName {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #0f5132;
+}
+
+
+.scoreSection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.scoreBox {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  min-width: 220px;
+}
+
+.scoreLabel {
+  display: block;
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scoreValue {
+  display: block;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #0f5132;
+}
+
+.classificationValue {
+  display: block;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #3498db;
+}
+
+
+.metricsSection {
+  margin-bottom: 40px;
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.metricsSection h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+.metricsList {
+  list-style: none;
+  padding: 0;
+}
+
+.metricItem {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.tipsSection h3 {
+  font-size: 1.6rem;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.tipsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.tipCard {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-top: 4px solid #ccc;
+}
+
+.tipCard h4 {
+  font-size: 1.3rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  color: #333;
+}
+
+.tipCard ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.tipCard li {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+
+.tipCard h4 svg {
+  margin-right: 10px;
+}
+
+.tipIconEnergy { color: #f39c12; }
+.tipIconWater { color: #3498db; }
+.tipIconWaste { color: #27ae60; }
+
+
+.tipCard:nth-of-type(1) { border-top-color: #f39c12; }
+.tipCard:nth-of-type(2) { border-top-color: #3498db; }
+.tipCard:nth-of-type(3) { border-top-color: #27ae60; }

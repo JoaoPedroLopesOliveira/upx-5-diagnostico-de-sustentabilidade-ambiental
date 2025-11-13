@@ -1,0 +1,83 @@
+
+
+.footer {
+  background-color: #2c3e50; 
+  color: #ecf0f1;
+  padding-top: 5px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.footerContainer {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.contactSection {
+  text-align: center;
+}
+
+.contactSection h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.contactSection p {
+  font-size: 1.1rem;
+  color: #bdc3c7;
+  margin-bottom: 5px;
+}
+
+.participantList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+  text-align: left;
+}
+
+.participant {
+  background-color: #34495e;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.participant strong {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.emailLink {
+  color: #3498db;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+.emailLink:hover {
+  color: #5dade2;
+}
+
+.footerBottom {
+  background-color: #23313f;
+  padding: 10px;  
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #95a5a6;
+  line-height: 1.5;
+}

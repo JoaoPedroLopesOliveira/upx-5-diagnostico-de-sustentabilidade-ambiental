@@ -1,0 +1,35 @@
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+
+.mainContent {
+  flex: 1;
+}
+
+
+.navbar {
+  background-color: #0f5132;
+  padding: 12px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  gap: 20px;
+}
+
+
+.navLink {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.2s ease;
+}
+
+.navLink:hover {
+  border-bottom: 2px solid #ffffff;
+}

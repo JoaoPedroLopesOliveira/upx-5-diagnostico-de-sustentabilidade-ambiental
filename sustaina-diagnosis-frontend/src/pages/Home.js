@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
+import styles from "../css/Home.module.css";
 
 function Home() {
   const [companies, setCompanies] = useState([]);
@@ -13,25 +14,26 @@ function Home() {
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Empresas Cadastradas</h1>
+    <div className={styles.homeContainer}>
+      <h1 className={styles.title}>Empresas Cadastradas</h1>
+      
       {companies.length === 0 ? (
-        <p>Nenhuma empresa cadastrada.</p>
+        <p className={styles.loading}>Nenhuma empresa cadastrada.</p>
       ) : (
-        <ul>
+        <ul className={styles.companyList}>
           {companies.map((company) => (
             <li
               key={company.id}
-              style={{
-                border: "1px solid #ccc",
-                margin: "10px",
-                padding: "10px",
-                borderRadius: "8px",
-                cursor: "pointer",
-              }}
+              className={styles.companyItem}
               onClick={() => navigate(`/diagnosis/${company.id}`)}
             >
-              <strong>{company.name}</strong> — {company.sector} ({company.location})
+              <div>
+                <strong className={styles.companyName}>{company.name}</strong>
+                <span className={styles.companyDetails}>
+                  {company.sector} ({company.location})
+                </span>
+              </div>
+              <span className={styles.viewMore}>Ver Diagnóstico &rarr;</span>
             </li>
           ))}
         </ul>
