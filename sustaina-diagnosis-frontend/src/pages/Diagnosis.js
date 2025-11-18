@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api";
 import styles from "../css/Diagnosis.module.css";
+import { FaBolt, FaWater, FaRecycle, FaFilePdf } from 'react-icons/fa';
 
-
-import { FaBolt, FaWater, FaRecycle } from 'react-icons/fa';
 
 function Diagnosis() {
   const { id } = useParams();
@@ -20,6 +19,12 @@ function Diagnosis() {
     return <p className={styles.loading}>Carregando diagnóstico...</p>;
   }
 
+  const handleDownloadPDF = () => {
+    const pdfUrl = `${api.defaults.baseURL}/companies/${id}/report/`;
+    window.open(pdfUrl, '_blank');
+  };
+
+
   return (
     <div className={styles.diagnosisContainer}>
       <header className={styles.header}>
@@ -27,7 +32,12 @@ function Diagnosis() {
         <h2 className={styles.companyName}>{diagnosis.company_name}</h2>
       </header>
 
-
+    <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+        <button onClick={handleDownloadPDF} className={styles.pdfButton}>
+          <FaFilePdf style={{ marginRight: '8px' }} />
+          Baixar Relatório em PDF
+        </button>
+      </div>
  
       <section className={styles.metricsSection}>
         <h3>Médias de Consumo</h3>

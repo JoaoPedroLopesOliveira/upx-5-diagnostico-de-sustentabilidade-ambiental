@@ -6,6 +6,11 @@ from . import models, schemas
 from fastapi.middleware.cors import CORSMiddleware
 import random
 from datetime import datetime,date, timedelta
+from fastapi.responses import StreamingResponse
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import cm
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -137,3 +142,81 @@ def delete_company(company_id: int, db: Session = Depends(get_db)):
     db.delete(company)
     db.commit()
     return
+
+@app.get("/companies/{company_id}/report/")
+def generate_pdf_report(company_id: int, db: Session = Depends(get_db)):
+    """Gera um relatório PDF detalhado para download"""
+    
+    # 1. Busca os dados (mesma lógica do diagnóstico)
+    company = db.query(models.Company).filter(models.Company.id == company_id).first()
+    if not company:
+        raise HTTPException(status_code=404, detail="Empresa não encontrada")
+    metrics = company.metrics
+    if not metrics:
+        raise HTTPException(status_code=404, detail="Sem métricas para gerar relatório")
+
+    avg_energy = sum(m.energy_kwh for m in metrics) / len(metrics)
+    avg_water = sum(m.water_m3 for m in metrics) / len(metrics)
+    avg_waste = sum(m.waste_kg for m in metrics) / len(metrics)
+
+    energy_score = max(0, 100 - (avg_energy / 10))
+    water_score = max(0, 100 - (avg_water / 5))
+    waste_score = max(0, 100 - (avg_waste / 2))
+    overall_score = (energy_score + water_score + waste_score) / 3
+    
+    if overall_score >= 85:
+        classificacao = "Excelente"
+    elif overall_score >= 70:
+        classificacao = "Bom"
+    elif overall_score >= 50:
+        classificacao = "Médio"
+    else:
+        classificacao = "Insatisfatório"
+
+    # 2. Configura o PDF
+    buffer = io.BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
+    width, height = A4
+    
+    # Cabeçalho
+    c.setFont("Helvetica-Bold", 18)
+    c.drawString(2 * cm, height - 2 * cm, "Relatório de Sustentabilidade Industrial")
+    
+    c.setFont("Helvetica", 12)
+    c.drawString(2 * cm, height - 3 * cm, f"Empresa: {company.name}")
+    c.drawString(2 * cm, height - 3.5 * cm, f"Localização: {company.location} | Setor: {company.sector}")
+    c.line(2 * cm, height - 4 * cm, width - 2 * cm, height - 4 * cm)
+
+    # Resultados Gerais
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(2 * cm, height - 5.5 * cm, "Diagnóstico Geral")
+    
+    c.setFont("Helvetica", 12)
+    c.drawString(2 * cm, height - 6.5 * cm, f"Pontuação de Sustentabilidade: {round(overall_score, 2)}")
+    c.drawString(2 * cm, height - 7.2 * cm, f"Classificação: {classificacao}")
+
+    # Detalhes das Métricas
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(2 * cm, height - 9 * cm, "Métricas Médias (30 Dias)")
+    
+    c.setFont("Helvetica", 12)
+    c.drawString(3 * cm, height - 10 * cm, f"- Energia: {round(avg_energy, 2)} kWh")
+    c.drawString(3 * cm, height - 10.7 * cm, f"- Água: {round(avg_water, 2)} m³")
+    c.drawString(3 * cm, height - 11.4 * cm, f"- Resíduos: {round(avg_waste, 2)} kg")
+
+    # Rodapé
+    c.setFont("Helvetica-Oblique", 10)
+    c.drawString(2 * cm, 2 * cm, "Gerado automaticamente pela Plataforma de Diagnóstico Sustentável.")
+
+    c.showPage()
+    c.save()
+
+    # 3. Prepara o arquivo para envio
+    buffer.seek(0)
+    filename = f"Relatorio_{company.name.replace(' ', '_')}.pdf"
+    
+    return StreamingResponse(
+        buffer, 
+        media_type="application/pdf", 
+        headers={"Content-Disposition": f"attachment; filename={filename}"}
+    )
