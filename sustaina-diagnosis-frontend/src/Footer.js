@@ -11,6 +11,7 @@ const participants = [
   { nome: 'Jean Lucas Barbosa Vargas', email: 'jeanlucas059@gmail.com' },
   { nome: 'João Pedro Lopes de Oliveira', email: 'joao.aprendiz4@gmail.com' },
   { nome: 'Gustavo Penido Carvalho', email: 'gustavopenido04@gmail.com' },
+  { nome: 'Paulo Henrique Martins Queiroga', email: 'paulohenriquemartins046@gmail.com' },
 ];
 
 const Footer = () => {
