@@ -127,8 +127,8 @@ def create_company(company: schemas.CompanyCreate, db: Session = Depends(get_db)
             company_id=db_company.id,
             timestamp=simulated_date,
             energy_kwh=random.uniform(100, 1000), 
-            water_m3=random.uniform((5, 200),2),   
-            waste_kg=random.uniform((1, 50),2)     
+            water_m3=random.uniform(5, 200),   # Removidos os parênteses extras e a vírgula errada
+            waste_kg=random.uniform(1, 50)     # Corrigido aqui também
         )
         metrics_to_add.append(new_metric)
     
